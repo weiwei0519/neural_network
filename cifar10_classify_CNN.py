@@ -19,6 +19,8 @@ from util.pathutil import PathUtil
 # os.environ["TF_CPP_MIN_LOG_LEVEL"]='2' # 只显示 warning 和 Error
 # os.environ["TF_CPP_MIN_LOG_LEVEL"]='3' # 只显示 Error
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
+
 tf.random.set_seed(2345)
 project_path = PathUtil()
 model_dir = project_path.rootPath + '/model/cifar10_CNN'
