@@ -60,8 +60,8 @@ def df_to_dataset(dataframe, shuffle=True, batch_size=32):
     return ds
 
 
-batch_size = 256
-epoch = 500
+batch_size = 64
+epoch = 100
 train_ds = df_to_dataset(train_data, batch_size=batch_size)
 val_ds = df_to_dataset(val_data, shuffle=False, batch_size=batch_size)
 test_ds = df_to_dataset(test_data, shuffle=False, batch_size=batch_size)
@@ -154,7 +154,7 @@ model_dir = project_path.rootPath + '/model/adult_income'
 tf.keras.utils.plot_model(model, to_file=model_dir+'/model_graph.png', show_shapes=True, rankdir="LR")
 
 # 模型训练
-history = model.fit(train_ds, epochs=50, validation_data=val_ds)
+history = model.fit(train_ds, epochs=epoch, validation_data=val_ds)
 
 # 显示训练集和验证集的acc和loss曲线
 acc = history.history['accuracy']
