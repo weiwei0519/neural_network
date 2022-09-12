@@ -61,7 +61,7 @@ def df_to_dataset(dataframe, shuffle=True, batch_size=32):
 
 
 batch_size = 256
-epoch = 100
+epoch = 500
 train_ds = df_to_dataset(train_data, batch_size=batch_size)
 val_ds = df_to_dataset(val_data, shuffle=False, batch_size=batch_size)
 test_ds = df_to_dataset(test_data, shuffle=False, batch_size=batch_size)
@@ -110,7 +110,7 @@ all_inputs = []
 encoded_features = []
 
 # Numeric features. 数值类型的feature
-for header in ['fnlwgt', 'capital_gain', 'capital_loss']:
+for header in ['age', 'fnlwgt', 'capital_gain', 'capital_loss', 'hours_per_week']:
     numeric_col = tf.keras.Input(shape=(1,), name=header)
     normalization_layer = get_normalization_layer(header, train_ds)
     encoded_numeric_col = normalization_layer(numeric_col)
@@ -118,7 +118,7 @@ for header in ['fnlwgt', 'capital_gain', 'capital_loss']:
     encoded_features.append(encoded_numeric_col)
 
 # Categorical features encoded as integers. 分类类型的feature，数值类型，转换为独热编码
-categorical_int_cols = ['age', 'education_years', 'hours_per_week']
+categorical_int_cols = ['education_years']
 for header in categorical_int_cols:
     categorical_col = tf.keras.Input(shape=(1,), name=header, dtype='int64')
     encoding_layer = get_category_encoding_layer(header, train_ds, dtype='int64',
@@ -140,13 +140,14 @@ for header in categorical_string_cols:
 
 # 创建模型
 all_features = tf.keras.layers.concatenate(encoded_features)
-x1 = tf.keras.layers.Dense(128, activation="relu")(all_features)
+x1 = tf.keras.layers.Dense(32, activation="relu")(all_features)
 x2 = tf.keras.layers.Dropout(0.5)(x1)
 output = tf.keras.layers.Dense(1)(x2)
 model = tf.keras.Model(all_inputs, output)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
               metrics=["accuracy"])
+model.summary()
 # 可视化模型
 # rankdir='LR' is used to make the graph horizontal.
 model_dir = project_path.rootPath + '/model/adult_income'

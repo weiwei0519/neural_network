@@ -40,15 +40,15 @@ cifar10_train_y = tf.cast(cifar10_train_y, dtype=tf.int64)
 cifar10_test_y = tf.cast(cifar10_test_y, dtype=tf.int64)
 
 # show example 数据
-plt.figure(figsize=(32, 32))
-for i in range(25):
-    plt.subplot(5, 5, i + 1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(cifar10_train_x[i], cmap=plt.cm.binary)
-    plt.xlabel([cifar10_train_y[i]])
-plt.show()
+# plt.figure(figsize=(32, 32))
+# for i in range(25):
+#     plt.subplot(5, 5, i + 1)
+#     plt.xticks([])
+#     plt.yticks([])
+#     plt.grid(False)
+#     plt.imshow(cifar10_train_x[i], cmap=plt.cm.binary)
+#     plt.xlabel([cifar10_train_y[i]])
+# plt.show()
 
 # 模型加载
 try:
